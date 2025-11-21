@@ -1,3 +1,30 @@
+const score = document.querySelector(".score");
+score.style.cssText = "color: black; background: white;"
+
+const div = document.querySelector(".div");
+div.style.cssText = "color: black; background: white;"
+
+const result = document.querySelector(".result");
+result.style.cssText = "color: black; background: white;"
+
+const winner = document.querySelector(".winner");
+score.style.cssText = "color: black; background: white;"
+
+const btn1 = document.querySelector(".rock");
+btn1.addEventListener("click", function() {
+    playround(getComputerChoice(), "rock")
+})
+
+const btn2 = document.querySelector(".paper");
+btn2.addEventListener("click", function() {
+    playround(getComputerChoice(), "paper")
+})
+
+const btn3 = document.querySelector(".scissors");
+btn3.addEventListener("click", function() {
+    playround(getComputerChoice(), "scissors")
+})
+
 function getComputerChoice(){
     
     let min = Math.ceil(1);
@@ -19,52 +46,56 @@ function getComputerChoice(){
     return Computerchoice;
 }
 
-function getHumanChoice(){
-    let Humanchoice = prompt();
-    return Humanchoice;
-}
+let humanScore = 0;
+let computerScore = 0; 
 
-function playGame(){
-    let humanScore = 0
-    let computerScore = 0;
-    
-    function playround(computer, human){
-    human = human.toLowerCase();
-    console.log(`Computer chose:${computer} vs Human chose:${human}`)
+function playround(computer, human){
+
+    result.textContent = `Computer chose: ${computer} vs Human chose: ${human}`
     if (computer == human) {
-        console.log("Tie!")
+        div.textContent = "Tie!"
     }
         else if (computer == "rock" && human == "paper"){
             humanScore += 1;
-            console.log("Human Wins! Paper beats Rock!")
+            div.textContent = "Human Wins! Paper beats Rock!"
         }
         else if (computer == "rock" && human == "scissors"){
             computerScore += 1
-            console.log("Computer Wins! Rock beats Scissors!")
+            div.textContent = "Computer Wins! Rock beats Scissors!"
         }
         else if (computer == "paper" && human == "scissors"){
             humanScore += 1;
-            console.log("Human Wins! Scissors beats Paper!")
+            div.textContent = "Human Wins! Scissors beats Paper!"
         }
         else if (computer == "paper" && human == "rock"){
             computerScore += 1
-            console.log("Computer Wins! Paper beats Rock!")
+            div.textContent = "Computer Wins! Paper beats Rock!"
         }
         else if (computer == "scissors" && human == "rock"){
             humanScore += 1;
-            console.log("Human Wins! Rock beats Scissors!")
+            div.textContent = "Human Wins! Rock beats Scissors!"
         }
         else if (computer == "scissors" && human == "paper"){
             computerScore += 1
-            console.log("Computer Wins! Scissors beat Paper")
+            div.textContent = "Computer Wins! Scissors beat Paper"
         }
+    score.textContent = `Human:${humanScore} Computer:${computerScore}`
+    
+    if (humanScore === 5){
+        winner.textContent = "Game over, Human wins!";
+        setTimeout(reset, 2000);
     }
-    playround(getComputerChoice(), getHumanChoice())
-    playround(getComputerChoice(), getHumanChoice())
-    playround(getComputerChoice(), getHumanChoice())
-    playround(getComputerChoice(), getHumanChoice())
-    playround(getComputerChoice(), getHumanChoice())
-    console.log(`Computer Scored ${computerScore}\nHuman Scored ${humanScore}`)
+    else if (computerScore === 5){
+        winner.textContent = "Game over, Computer wins!";
+        setTimeout(reset, 2000);  
+    }
 }
 
-playGame()
+function reset(){
+    humanScore = 0;
+    computerScore = 0;
+    div.textContent = "";
+    winner.textContent = "";
+    score.textContent = "";
+    result.textContent = "";
+}
